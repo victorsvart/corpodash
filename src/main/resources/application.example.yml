@@ -1,6 +1,6 @@
 spring:
   application:
-    name: base
+    name: corpodash
 
   datasource:
     url: jdbc:postgresql://localhost:5432/mydatabase

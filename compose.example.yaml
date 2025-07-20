@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=corpodash'
+      - 'POSTGRES_PASSWORD=yourpass'
+      - 'POSTGRES_USER=youruser'
+    ports:
+      - '5432:5432'
