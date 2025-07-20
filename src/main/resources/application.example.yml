@@ -17,6 +17,6 @@ spring:
 
 security:
   jwt:
-    issuer: yourissuer
+    issuer: corpodash
     secret-key: mysecret
     expiry-time-in-seconds: 86400
