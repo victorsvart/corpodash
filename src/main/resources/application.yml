@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: base
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: myuser
+    password: secret
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+
+security:
+  jwt:
+    issuer: yourissuer
+    secret-key: mysecret
+    expiry-time-in-seconds: 86400
