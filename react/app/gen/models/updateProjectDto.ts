@@ -5,10 +5,8 @@
  * OpenAPI spec version: v0
  */
 
-export interface UserPresenter {
+export interface UpdateProjectDto {
   id?: number;
-  fullName?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
+  name?: string;
+  team?: number[];
 }

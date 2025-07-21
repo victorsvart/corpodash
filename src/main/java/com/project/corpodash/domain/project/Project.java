@@ -1,19 +1,17 @@
 package com.project.corpodash.domain.project;
 
 import com.project.corpodash.domain.base.Auditable;
+import com.project.corpodash.domain.plan.Plan;
+import com.project.corpodash.domain.project.projectstatus.ProjectStatus;
+import com.project.corpodash.domain.projectrepo.ProjectRepo;
+import com.project.corpodash.domain.server.Server;
 import com.project.corpodash.domain.user.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity()
+@Entity
 @Table(name = "projects")
 public class Project extends Auditable {
   @Id
@@ -22,21 +20,37 @@ public class Project extends Auditable {
 
   private String name;
 
+  private String description;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private ProjectStatus status;
+
   @ManyToMany
-  @JoinTable(
-      name = "project_team",
-      joinColumns = @JoinColumn(name = "project_id"),
-      inverseJoinColumns = @JoinColumn(name = "user_id"))
-  private List<User> team;
+  @JoinTable(name = "project_team", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+  private List<User> team = new ArrayList<>();
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "creator_id", nullable = false)
   private User creator;
 
-  protected Project() {}
+  @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)
+  private ProjectRepo repository;
+
+  @ManyToMany
+  @JoinTable(name = "project_server", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "server_id"))
+  private List<Server> servers = new ArrayList<>();
+
+  @OneToMany(mappedBy = "project")
+  private List<Plan> plans = new ArrayList<>();
+
+  protected Project() {
+  }
 
   public Project(Builder builder) {
     this.name = builder.name;
+    this.description = builder.description;
+    this.status = builder.status;
     this.team = builder.team;
     this.creator = builder.creator;
   }
@@ -53,20 +67,37 @@ public class Project extends Auditable {
     this.team = team;
   }
 
-  public boolean isCreator(Long userId) {
-    return this.creator.getId().equals(userId);
+  public void updateDescription(String description) {
+    if (description == null || description.isBlank()) {
+      throw new IllegalArgumentException("Description can't be empty");
+    }
+    this.description = description;
   }
 
   public void updateName(String name) {
-    if (name.isEmpty()) {
+    if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Project name can't be empty");
     }
-
     this.name = name;
   }
 
+  public void updateStatus(ProjectStatus status) {
+    this.status = status;
+  }
+
+  public void updateRepository(ProjectRepo repo) {
+    if (this.repository != null && this.repository.getId().equals(repo.getId())) {
+      throw new IllegalArgumentException("Repository is already the one specified");
+    }
+    this.repository = repo;
+  }
+
   public boolean isUserOnTeam(Long userId) {
-    return this.getTeam().stream().anyMatch(member -> member.getId().equals(userId));
+    return this.team.stream().anyMatch(member -> member.getId().equals(userId));
+  }
+
+  public boolean isCreator(Long userId) {
+    return this.creator.getId().equals(userId);
   }
 
   public Long getId() {
@@ -77,6 +108,14 @@ public class Project extends Auditable {
     return name;
   }
 
+  public String getDescription() {
+    return description;
+  }
+
+  public ProjectStatus getStatus() {
+    return status;
+  }
+
   public List<User> getTeam() {
     return team;
   }
@@ -85,14 +124,37 @@ public class Project extends Auditable {
     return creator;
   }
 
+  public ProjectRepo getRepository() {
+    return repository;
+  }
+
+  public List<Server> getServers() {
+    return servers;
+  }
+
+  public List<Plan> getPlans() {
+    return plans;
+  }
+
   public static class Builder {
     private String name;
-    private List<User> team;
+    private String description;
+    private ProjectStatus status;
+    private List<User> team = new ArrayList<>();
     private User creator;
 
     public Builder name(String name) {
-      System.out.println("HELOOOOOOo" + name);
       this.name = name;
+      return this;
+    }
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Builder status(ProjectStatus status) {
+      this.status = status;
       return this;
     }
 

@@ -1,7 +1,12 @@
-import { index, prefix, route, type RouteConfig } from "@react-router/dev/routes";
+import { index, layout, prefix, route, type RouteConfig } from "@react-router/dev/routes";
 
 export default [
-  index("routes/dashboard.tsx"),
+  // route("/", { redirect: "/home" }),
+
+  layout("routes/dashboard.tsx", [
+    route("home", "routes/home/home.tsx"),
+    route("teams", "routes/teams/teams.tsx")
+  ]),
 
   ...prefix("auth", [
     route("signIn", "routes/auth/signIn.tsx"),
