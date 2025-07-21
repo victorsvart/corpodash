@@ -45,8 +45,16 @@ public class Project extends Auditable {
     this.team.add(user);
   }
 
+  public void removeTeamMember(Long userId) {
+    this.team.removeIf(member -> member.getId().equals(userId));
+  }
+
   public void updateTeam(List<User> team) {
     this.team = team;
+  }
+
+  public boolean isCreator(Long userId) {
+    return this.creator.getId().equals(userId);
   }
 
   public void updateName(String name) {
@@ -55,6 +63,10 @@ public class Project extends Auditable {
     }
 
     this.name = name;
+  }
+
+  public boolean isUserOnTeam(Long userId) {
+    return this.getTeam().stream().anyMatch(member -> member.getId().equals(userId));
   }
 
   public Long getId() {

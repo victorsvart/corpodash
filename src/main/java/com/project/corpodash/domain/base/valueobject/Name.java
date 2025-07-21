@@ -1,4 +1,4 @@
-package com.project.corpodash.domain.name;
+package com.project.corpodash.domain.base.valueobject;
 
 import org.apache.commons.lang3.ArrayUtils;
 

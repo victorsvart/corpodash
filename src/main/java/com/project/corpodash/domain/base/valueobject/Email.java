@@ -1,4 +1,4 @@
-package com.project.corpodash.domain.email;
+package com.project.corpodash.domain.base.valueobject;
 
 import jakarta.persistence.Embeddable;
 

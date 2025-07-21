@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.project.corpodash.domain.base.Auditable;
-import com.project.corpodash.domain.email.Email;
-import com.project.corpodash.domain.name.Name;
+import com.project.corpodash.domain.base.valueobject.Email;
+import com.project.corpodash.domain.base.valueobject.Name;
 import com.project.corpodash.domain.project.Project;
 import com.project.corpodash.domain.role.Role;
 

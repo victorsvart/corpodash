@@ -3,7 +3,7 @@ package com.project.corpodash.domain.user.interfaces;
 import java.util.List;
 import java.util.Optional;
 
-import com.project.corpodash.domain.email.Email;
+import com.project.corpodash.domain.base.valueobject.Email;
 import com.project.corpodash.domain.user.User;
 
 public interface UserRepository {

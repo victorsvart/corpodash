@@ -4,21 +4,21 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.project.corpodash.application.dto.user.UserPresenter;
-import com.project.corpodash.infrastructure.persistence.user.JpaUserRepository;
+import com.project.corpodash.application.base.Usecase;
+import com.project.corpodash.application.service.entityManager.EntityManagerService;
+import com.project.corpodash.domain.user.User;
+import com.project.corpodash.domain.user.interfaces.UserRepository;
 
 @Service
-public class GetAllUsersUseCase {
-  private final JpaUserRepository userRepository;
+public class GetAllUsersUseCase extends Usecase<List<User>, Void> {
+  private final UserRepository userRepository;
 
-  public GetAllUsersUseCase(JpaUserRepository userRepository) {
+  public GetAllUsersUseCase(EntityManagerService ems, UserRepository userRepository) {
+    super(ems);
     this.userRepository = userRepository;
   }
 
-  public List<UserPresenter> execute() {
-    return userRepository.findAll()
-        .stream()
-        .map(UserPresenter::new)
-        .toList();
+  public List<User> execute() {
+    return userRepository.findAll();
   }
 }

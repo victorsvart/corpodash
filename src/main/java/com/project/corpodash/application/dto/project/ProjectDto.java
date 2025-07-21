@@ -12,4 +12,10 @@ public class ProjectDto {
       return name.isEmpty() && team.isEmpty();
     }
   }
+
+  public static record AddTeamMemberDto(Long projectId, Long userId) {
+  }
+
+  public static record RemoveTeamMemberDto(Long projectId, Long userId) {
+  }
 }

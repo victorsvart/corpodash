@@ -7,19 +7,22 @@ import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.corpodash.application.base.Usecase;
 import com.project.corpodash.application.dto.user.AuthDto;
-import com.project.corpodash.domain.email.Email;
+import com.project.corpodash.application.service.entityManager.EntityManagerService;
+import com.project.corpodash.domain.base.valueobject.Email;
 import com.project.corpodash.domain.role.Role;
 import com.project.corpodash.domain.user.User;
 import com.project.corpodash.domain.user.interfaces.UserRepository;
 
 @Service
-public class SignUpUseCase {
+public class SignUpUseCase extends Usecase<Void, Void> {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
-  public SignUpUseCase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+  public SignUpUseCase(EntityManagerService ems, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    super(ems);
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
   }

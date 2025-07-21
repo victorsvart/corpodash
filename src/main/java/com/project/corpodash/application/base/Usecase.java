@@ -10,5 +10,11 @@ public abstract class Usecase<T, X> {
     this.ems = ems;
   }
 
-  public abstract T execute(X dto);
+  public T execute() {
+    throw new UnsupportedOperationException("Usecase requires input parameter");
+  }
+
+  public T execute(X dto) {
+    throw new UnsupportedOperationException("Usecase does not support input parameter");
+  }
 }

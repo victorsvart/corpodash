@@ -16,6 +16,7 @@ import com.project.corpodash.application.dto.user.UserPresenter;
 import com.project.corpodash.application.usecase.user.GetAllUsersUseCase;
 import com.project.corpodash.application.usecase.user.SignInUseCase;
 import com.project.corpodash.application.usecase.user.SignUpUseCase;
+import com.project.corpodash.domain.user.User;
 import com.project.corpodash.infrastructure.token.JwtUtil;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -56,9 +57,10 @@ public class UserController {
   }
 
   @GetMapping("/getAllUsers")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<UserPresenter>> getAllUsers() {
-    List<UserPresenter> users = getAllUsersUseCase.execute();
-    return ResponseEntity.ok(users);
+    List<User> users = getAllUsersUseCase.execute();
+    return ResponseEntity.ok(UserPresenter.ofMany(users));
   }
 
   @GetMapping("/logout")

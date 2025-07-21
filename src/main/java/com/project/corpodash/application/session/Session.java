@@ -27,4 +27,15 @@ public class Session {
 
     throw new IllegalStateException("No authenticated user found");
   }
+
+  public static boolean isAdmin() {
+
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    if (authentication != null && authentication.getPrincipal() instanceof AppUserDetails userDetails) {
+      return userDetails.isAdmin();
+    }
+
+    throw new IllegalStateException("No authenticated user found");
+  }
 }

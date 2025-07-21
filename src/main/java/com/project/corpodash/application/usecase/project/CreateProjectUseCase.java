@@ -27,8 +27,6 @@ public class CreateProjectUseCase extends Usecase<Project, ProjectDto.CreateProj
       throw new IllegalArgumentException("Project with given name already exists!");
     }
 
-    System.out.println("USECASE" + dto.name());
-
     List<User> team = new ArrayList<>();
     dto.team().ifPresent(teamIds -> team.addAll(ems.getReferences(User.class, teamIds)));
 

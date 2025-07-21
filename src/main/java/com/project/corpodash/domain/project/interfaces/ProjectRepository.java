@@ -14,5 +14,7 @@ public interface ProjectRepository {
 
   List<Project> findAll();
 
+  List<Project> findAllByCreatorId(Long id);
+
   Project save(Project project);
 }

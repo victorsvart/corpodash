@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.project.corpodash.domain.role.Role;
 import com.project.corpodash.domain.user.User;
 
 import java.util.Collection;
@@ -56,5 +57,9 @@ public class AppUserDetails implements UserDetails {
 
   public User getDomainUser() {
     return user;
+  }
+
+  public boolean isAdmin() {
+    return user.getRoles().stream().anyMatch(role -> role.equals(Role.ADMIN));
   }
 }

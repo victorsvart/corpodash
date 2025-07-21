@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.project.corpodash.domain.email.Email;
+import com.project.corpodash.domain.base.valueobject.Email;
 import com.project.corpodash.domain.user.interfaces.UserRepository;
 import com.project.corpodash.infrastructure.security.AppUserDetails;
 
