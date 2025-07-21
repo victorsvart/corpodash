@@ -18,6 +18,9 @@ baseline:
 repair:
 	./mvnw flyway:repair
 
+seed:
+	./mvnw spring-boot:run -Dspring-boot.run.arguments=--seed -Dspring-boot.run.profiles=dev
+
 new-migration:
 	@echo "Creating new migration file..."
 	@TIMESTAMP=$$(date +%Y%m%d%H%M%S) && \

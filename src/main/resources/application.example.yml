@@ -6,6 +6,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/mydatabase
     username: myuser
     password: secret
+
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:db/seed/dev-data.sql
+
   jpa:
     hibernate:
       ddl-auto: none
