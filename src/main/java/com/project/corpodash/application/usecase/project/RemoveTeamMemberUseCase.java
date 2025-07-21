@@ -1,7 +1,5 @@
 package com.project.corpodash.application.usecase.project;
 
-import org.springframework.stereotype.Service;
-
 import com.project.corpodash.application.base.Usecase;
 import com.project.corpodash.application.dto.project.ProjectDto;
 import com.project.corpodash.application.dto.project.ProjectDto.RemoveTeamMemberDto;
@@ -9,8 +7,8 @@ import com.project.corpodash.application.service.entityManager.EntityManagerServ
 import com.project.corpodash.application.session.Session;
 import com.project.corpodash.domain.project.Project;
 import com.project.corpodash.domain.project.interfaces.ProjectRepository;
-
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RemoveTeamMemberUseCase extends Usecase<Project, ProjectDto.RemoveTeamMemberDto> {
@@ -23,8 +21,10 @@ public class RemoveTeamMemberUseCase extends Usecase<Project, ProjectDto.RemoveT
 
   @Override
   public Project execute(RemoveTeamMemberDto dto) {
-    Project project = projectRepository.findById(dto.projectId())
-        .orElseThrow(() -> new EntityNotFoundException("Cant find specified project"));
+    Project project =
+        projectRepository
+            .findById(dto.projectId())
+            .orElseThrow(() -> new EntityNotFoundException("Cant find specified project"));
 
     if (!project.isCreator(Session.getUserId())) {
       throw new RuntimeException("Can't update team which you are not the creator");
@@ -37,5 +37,4 @@ public class RemoveTeamMemberUseCase extends Usecase<Project, ProjectDto.RemoveT
     project.removeTeamMember(dto.userId());
     return projectRepository.save(project);
   }
-
 }

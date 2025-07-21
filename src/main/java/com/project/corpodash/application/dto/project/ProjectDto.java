@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProjectDto {
-  public static record CreateProjectDto(String name, Optional<List<Long>> team) {
-  }
+  public static record CreateProjectDto(String name, Optional<List<Long>> team) {}
 
   public static record UpdateProjectDto(Long id, Optional<String> name, Optional<List<Long>> team) {
     public boolean allEmpty() {
@@ -13,9 +12,7 @@ public class ProjectDto {
     }
   }
 
-  public static record AddTeamMemberDto(Long projectId, Long userId) {
-  }
+  public static record AddTeamMemberDto(Long projectId, Long userId) {}
 
-  public static record RemoveTeamMemberDto(Long projectId, Long userId) {
-  }
+  public static record RemoveTeamMemberDto(Long projectId, Long userId) {}
 }

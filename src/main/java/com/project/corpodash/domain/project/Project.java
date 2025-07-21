@@ -1,10 +1,7 @@
 package com.project.corpodash.domain.project;
 
-import java.util.List;
-
 import com.project.corpodash.domain.base.Auditable;
 import com.project.corpodash.domain.user.User;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +11,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity()
 @Table(name = "projects")
@@ -25,15 +23,17 @@ public class Project extends Auditable {
   private String name;
 
   @ManyToMany
-  @JoinTable(name = "project_team", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+  @JoinTable(
+      name = "project_team",
+      joinColumns = @JoinColumn(name = "project_id"),
+      inverseJoinColumns = @JoinColumn(name = "user_id"))
   private List<User> team;
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "creator_id", nullable = false)
   private User creator;
 
-  protected Project() {
-  }
+  protected Project() {}
 
   public Project(Builder builder) {
     this.name = builder.name;

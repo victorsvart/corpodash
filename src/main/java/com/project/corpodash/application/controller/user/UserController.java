@@ -1,7 +1,14 @@
 package com.project.corpodash.application.controller.user;
 
+import com.project.corpodash.application.dto.user.AuthDto;
+import com.project.corpodash.application.dto.user.UserPresenter;
+import com.project.corpodash.application.usecase.user.GetAllUsersUseCase;
+import com.project.corpodash.application.usecase.user.SignInUseCase;
+import com.project.corpodash.application.usecase.user.SignUpUseCase;
+import com.project.corpodash.domain.user.User;
+import com.project.corpodash.infrastructure.token.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,16 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.corpodash.application.dto.user.AuthDto;
-import com.project.corpodash.application.dto.user.UserPresenter;
-import com.project.corpodash.application.usecase.user.GetAllUsersUseCase;
-import com.project.corpodash.application.usecase.user.SignInUseCase;
-import com.project.corpodash.application.usecase.user.SignUpUseCase;
-import com.project.corpodash.domain.user.User;
-import com.project.corpodash.infrastructure.token.JwtUtil;
-
-import jakarta.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -29,7 +26,9 @@ public class UserController {
   private final SignInUseCase signInUseCase;
   private final GetAllUsersUseCase getAllUsersUseCase;
 
-  public UserController(SignUpUseCase signUpUseCase, SignInUseCase signInUseCase,
+  public UserController(
+      SignUpUseCase signUpUseCase,
+      SignInUseCase signInUseCase,
       GetAllUsersUseCase getAllUsersUseCase) {
     this.signUpUseCase = signUpUseCase;
     this.signInUseCase = signInUseCase;

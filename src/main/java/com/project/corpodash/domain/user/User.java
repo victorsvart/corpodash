@@ -1,14 +1,10 @@
 package com.project.corpodash.domain.user;
 
-import java.util.List;
-import java.util.Set;
-
 import com.project.corpodash.domain.base.Auditable;
 import com.project.corpodash.domain.base.valueobject.Email;
 import com.project.corpodash.domain.base.valueobject.Name;
 import com.project.corpodash.domain.project.Project;
 import com.project.corpodash.domain.role.Role;
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -23,6 +19,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
+import java.util.Set;
 
 @Entity()
 @Table(name = "users")
@@ -52,8 +50,7 @@ public class User extends Auditable {
   @OneToMany(mappedBy = "creator")
   private List<Project> creatorOf;
 
-  protected User() {
-  }
+  protected User() {}
 
   protected User(Builder builder) {
     this.name = builder.name;
@@ -104,11 +101,9 @@ public class User extends Auditable {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    if (this == o) return true;
 
-    if (o == null || getClass() != o.getClass())
-      return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     User user = (User) o;
     return id != null && id.equals(user.id);

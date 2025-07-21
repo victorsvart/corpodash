@@ -1,7 +1,8 @@
 package com.project.corpodash.infrastructure.security;
 
+import com.project.corpodash.infrastructure.token.JwtFilter;
+import com.project.corpodash.infrastructure.token.JwtTokenProvider;
 import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,9 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import com.project.corpodash.infrastructure.token.JwtFilter;
-import com.project.corpodash.infrastructure.token.JwtTokenProvider;
 
 @Configuration
 public class SecurityConfig {
@@ -37,15 +35,12 @@ public class SecurityConfig {
   /**
    * Defines CORS configuration allowing frontend access from localhost.
    *
-   * @return a CorsConfigurationSource with allowed origins, methods, headers,
-   *         and
-   *         credentials
+   * @return a CorsConfigurationSource with allowed origins, methods, headers, and credentials
    */
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
-    config.setAllowedOrigins(List.of("http://localhost:5173",
-        "http://127.0.0.1:5173"));
+    config.setAllowedOrigins(List.of("http://localhost:5173", "http://127.0.0.1:5173"));
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     config.setAllowedHeaders(List.of("*"));
     config.setAllowCredentials(true);
@@ -61,13 +56,9 @@ public class SecurityConfig {
   /**
    * Configures the main security filter chain.
    *
-   * <p>
-   * Disables CSRF, form login, and HTTP basic auth. Enables CORS and stateless
-   * session
-   * management. Adds JWT filter before username-password authentication filter.
-   * Permits
-   * unauthenticated access to login, register, and Swagger docs endpoints.
-   * Secures all other
+   * <p>Disables CSRF, form login, and HTTP basic auth. Enables CORS and stateless session
+   * management. Adds JWT filter before username-password authentication filter. Permits
+   * unauthenticated access to login, register, and Swagger docs endpoints. Secures all other
    * requests.
    *
    * @param http the HttpSecurity to configure
@@ -75,26 +66,23 @@ public class SecurityConfig {
    * @throws Exception if a configuration error occurs
    */
   @Bean
-  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
-      throws Exception {
+  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .cors(Customizer.withDefaults())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .addFilterBefore(new JwtFilter(tokenProvider),
-            UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
         .formLogin(form -> form.disable())
         .httpBasic(basic -> basic.disable())
         .authorizeHttpRequests(
-            request -> request
-                .requestMatchers("/user/signIn", "/user/signUp").permitAll()
-                .requestMatchers(
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**",
-                    "/swagger-ui.html")
-                .permitAll()
-                .anyRequest()
-                .authenticated());
+            request ->
+                request
+                    .requestMatchers("/user/signIn", "/user/signUp")
+                    .permitAll()
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated());
 
     return http.build();
   }

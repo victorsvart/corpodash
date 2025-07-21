@@ -5,9 +5,7 @@ import org.springframework.http.ResponseCookie;
 /**
  * Utility class for creating HTTP cookies related to JWT tokens.
  *
- * <p>
- * Provides methods to generate cookies that store JWT tokens and methods to
- * generate cookies
+ * <p>Provides methods to generate cookies that store JWT tokens and methods to generate cookies
  * that effectively clear the token.
  */
 public class JwtUtil {
@@ -29,8 +27,7 @@ public class JwtUtil {
   }
 
   /**
-   * Creates the string representation of an HTTP-only cookie containing the given
-   * JWT token.
+   * Creates the string representation of an HTTP-only cookie containing the given JWT token.
    *
    * @param token the JWT token to store in the cookie
    * @return the Set-Cookie header string for the cookie
@@ -40,8 +37,7 @@ public class JwtUtil {
   }
 
   /**
-   * Creates an HTTP-only cookie that expires immediately, effectively clearing
-   * the JWT token.
+   * Creates an HTTP-only cookie that expires immediately, effectively clearing the JWT token.
    *
    * @return a ResponseCookie that clears the token cookie
    */
@@ -56,8 +52,7 @@ public class JwtUtil {
   }
 
   /**
-   * Creates the string representation of an HTTP-only cookie that expires
-   * immediately, effectively
+   * Creates the string representation of an HTTP-only cookie that expires immediately, effectively
    * clearing the JWT token.
    *
    * @return the Set-Cookie header string for the clearing cookie
