@@ -2,6 +2,7 @@ package com.project.corpodash.application.controller.user;
 
 import com.project.corpodash.application.dto.user.AuthDto;
 import com.project.corpodash.application.dto.user.UserPresenter;
+import com.project.corpodash.application.session.Session;
 import com.project.corpodash.application.usecase.user.GetAllUsersUseCase;
 import com.project.corpodash.application.usecase.user.SignInUseCase;
 import com.project.corpodash.application.usecase.user.SignUpUseCase;
@@ -37,8 +38,8 @@ public class UserController {
 
   @GetMapping("/me")
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity<?> me() {
-    return ResponseEntity.ok("");
+  public ResponseEntity<UserPresenter> me() {
+    return ResponseEntity.ok(UserPresenter.of(Session.getUser()));
   }
 
   @PostMapping("/signUp")

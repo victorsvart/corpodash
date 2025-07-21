@@ -5,7 +5,6 @@
  * OpenAPI spec version: v0
  */
 import type {
-  Me200,
   SignIn200,
   SignInRequest,
   SignUp200,
@@ -91,7 +90,7 @@ export const signIn = async (signInRequest: SignInRequest, options?: RequestInit
 
 
 export type meResponse200 = {
-  data: Me200
+  data: UserPresenter
   status: 200
 }
     
