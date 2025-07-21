@@ -1,6 +1,6 @@
-import { data, redirect, Outlet, useLoaderData } from "react-router";
+import { redirect, Outlet, useLoaderData } from "react-router";
 import { NavLink } from "react-router";
-import { me } from "~/gen/user-controller/user-controller";
+import { logout, me } from "~/gen/user-controller/user-controller";
 import { Settings, LogOut, ChevronDown } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
 import { Button } from "~/components/ui/button";
@@ -19,8 +19,8 @@ export async function clientLoader() {
 export default function Dashboard() {
   const user = useLoaderData<UserPresenter>();
   const handleLogout = async () => {
-    // Add your logout logic here
-    console.log("Logging out...");
+    await logout({ credentials: 'include' })
+    redirect("/auth/signIn");
   };
 
   const handleUserSettings = () => {
@@ -43,7 +43,7 @@ export default function Dashboard() {
               {/* Navigation Links */}
               <div className="hidden md:flex space-x-1">
                 <NavLink
-                  to="/dashboard"
+                  to="/home"
                   end
                   className={({ isActive }) =>
                     `px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive
@@ -55,7 +55,7 @@ export default function Dashboard() {
                   Home
                 </NavLink>
                 <NavLink
-                  to="/dashboard/teams"
+                  to="/teams"
                   className={({ isActive }) =>
                     `px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive
                       ? 'bg-secondary text-secondary-foreground'

@@ -12,7 +12,7 @@ import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 export async function clientLoader() {
   const response = await me({ credentials: 'include' })
   if (response.status == 200) {
-    return redirect("/");
+    return redirect("/home");
   }
 
   return data({});
@@ -25,7 +25,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     return response.data;
   }
 
-  return redirect('/');
+  return redirect('/home');
 }
 
 export default function SignIn() {
