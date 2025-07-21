@@ -1,10 +1,5 @@
 package com.project.corpodash.application.usecase.project;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.project.corpodash.application.base.Usecase;
 import com.project.corpodash.application.dto.project.ProjectDto;
 import com.project.corpodash.application.service.entityManager.EntityManagerService;
@@ -12,6 +7,9 @@ import com.project.corpodash.application.session.Session;
 import com.project.corpodash.domain.project.Project;
 import com.project.corpodash.domain.project.interfaces.ProjectRepository;
 import com.project.corpodash.domain.user.User;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CreateProjectUseCase extends Usecase<Project, ProjectDto.CreateProjectDto> {
@@ -31,11 +29,7 @@ public class CreateProjectUseCase extends Usecase<Project, ProjectDto.CreateProj
     dto.team().ifPresent(teamIds -> team.addAll(ems.getReferences(User.class, teamIds)));
 
     User creator = Session.getUser();
-    Project project = new Project.Builder()
-        .name(dto.name())
-        .team(team)
-        .creator(creator)
-        .build();
+    Project project = new Project.Builder().name(dto.name()).team(team).creator(creator).build();
 
     return projectRepository.save(project);
   }

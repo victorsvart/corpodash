@@ -1,9 +1,8 @@
 package com.project.corpodash.application.dto.user;
 
-import java.util.List;
-
 import com.project.corpodash.application.dto.PresenterUtils;
 import com.project.corpodash.domain.user.User;
+import java.util.List;
 
 public record UserPresenter(Long id, String fullName, String email) {
 
@@ -18,5 +17,4 @@ public record UserPresenter(Long id, String fullName, String email) {
   public static List<UserPresenter> ofMany(List<User> users) {
     return PresenterUtils.ofMany(users, UserPresenter::of);
   }
-
 }

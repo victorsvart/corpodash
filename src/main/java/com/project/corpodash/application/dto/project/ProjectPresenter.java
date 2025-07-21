@@ -1,12 +1,12 @@
 package com.project.corpodash.application.dto.project;
 
-import java.util.List;
-
 import com.project.corpodash.application.dto.PresenterUtils;
 import com.project.corpodash.application.dto.user.UserPresenter;
 import com.project.corpodash.domain.project.Project;
+import java.util.List;
 
-public record ProjectPresenter(Long id, String name, List<UserPresenter> team, UserPresenter creator) {
+public record ProjectPresenter(
+    Long id, String name, List<UserPresenter> team, UserPresenter creator) {
   public ProjectPresenter(Project project) {
     this(
         project.getId(),

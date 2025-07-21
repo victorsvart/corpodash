@@ -6,8 +6,7 @@ import jakarta.persistence.Embeddable;
 public class Email {
   private String email;
 
-  protected Email() {
-  }
+  protected Email() {}
 
   protected Email(String value) {
     this.email = value;

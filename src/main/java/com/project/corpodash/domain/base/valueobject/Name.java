@@ -1,15 +1,13 @@
 package com.project.corpodash.domain.base.valueobject;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import jakarta.persistence.Embeddable;
+import org.apache.commons.lang3.ArrayUtils;
 
 @Embeddable
 public class Name {
   private String name;
 
-  protected Name() {
-  }
+  protected Name() {}
 
   protected Name(String value) {
     this.name = value;

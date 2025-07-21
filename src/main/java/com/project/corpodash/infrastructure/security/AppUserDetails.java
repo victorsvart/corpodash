@@ -1,14 +1,12 @@
 package com.project.corpodash.infrastructure.security;
 
+import com.project.corpodash.domain.role.Role;
+import com.project.corpodash.domain.user.User;
+import java.util.Collection;
+import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.project.corpodash.domain.role.Role;
-import com.project.corpodash.domain.user.User;
-
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class AppUserDetails implements UserDetails {
 

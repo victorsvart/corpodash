@@ -1,7 +1,13 @@
 package com.project.corpodash.infrastructure.token;
 
+import com.project.corpodash.application.service.user.AppUserDetailsService;
+import com.project.corpodash.domain.user.interfaces.TokenProvider;
+import com.project.corpodash.infrastructure.security.AppUserDetails;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.crypto.SecretKey;
@@ -9,24 +15,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
-
-import com.project.corpodash.application.service.user.AppUserDetailsService;
-import com.project.corpodash.domain.user.interfaces.TokenProvider;
-import com.project.corpodash.infrastructure.security.AppUserDetails;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 /**
  * Service responsible for creating, parsing, and validating JWT tokens.
  *
- * <p>
- * Uses configured secret key, issuer, and expiration time to generate tokens
- * and extract
+ * <p>Uses configured secret key, issuer, and expiration time to generate tokens and extract
  * authentication information.
  */
 @Service
@@ -74,13 +68,13 @@ public class JwtTokenProvider implements TokenProvider {
    */
   public String makeToken(Authentication authentication) {
     String username = authentication.getName();
-    List<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+    List<String> roles =
+        authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
     return Jwts.builder()
         .issuer(issuer)
         .subject(username)
         .issuedAt(new Date())
-        .expiration(new Date(System.currentTimeMillis() + (expirationTimeInSeconds *
-            1000)))
+        .expiration(new Date(System.currentTimeMillis() + (expirationTimeInSeconds * 1000)))
         .claim("username", username)
         .claim("roles", roles)
         .signWith(getSecretKey())

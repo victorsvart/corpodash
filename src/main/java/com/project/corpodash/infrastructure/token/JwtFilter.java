@@ -13,12 +13,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * JWT authentication filter that processes incoming HTTP requests once per
- * request.
+ * JWT authentication filter that processes incoming HTTP requests once per request.
  *
- * <p>
- * Extracts JWT tokens from the "Authorization" header (Bearer token) or from
- * cookies, validates
+ * <p>Extracts JWT tokens from the "Authorization" header (Bearer token) or from cookies, validates
  * the token, and sets the authentication in the security context if valid.
  */
 public class JwtFilter extends OncePerRequestFilter {

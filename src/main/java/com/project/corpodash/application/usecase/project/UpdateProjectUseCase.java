@@ -1,18 +1,15 @@
 package com.project.corpodash.application.usecase.project;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.project.corpodash.application.base.Usecase;
 import com.project.corpodash.application.dto.project.ProjectDto;
 import com.project.corpodash.application.service.entityManager.EntityManagerService;
 import com.project.corpodash.domain.project.Project;
 import com.project.corpodash.domain.project.interfaces.ProjectRepository;
 import com.project.corpodash.domain.user.User;
-
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UpdateProjectUseCase extends Usecase<Project, ProjectDto.UpdateProjectDto> {
@@ -30,8 +27,10 @@ public class UpdateProjectUseCase extends Usecase<Project, ProjectDto.UpdateProj
   }
 
   public Project execute(ProjectDto.UpdateProjectDto dto) {
-    Project project = projectRepository.findById(dto.id())
-        .orElseThrow(() -> new EntityNotFoundException("No project with provided id"));
+    Project project =
+        projectRepository
+            .findById(dto.id())
+            .orElseThrow(() -> new EntityNotFoundException("No project with provided id"));
 
     if (dto.allEmpty()) {
       return project;

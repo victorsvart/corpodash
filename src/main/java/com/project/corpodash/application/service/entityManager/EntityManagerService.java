@@ -3,23 +3,22 @@ package com.project.corpodash.application.service.entityManager;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EntityManagerService {
 
-  @PersistenceContext
-  private EntityManager entityManager;
+  @PersistenceContext private EntityManager entityManager;
 
   public <T, ID> T getReferenceOrThrow(Class<T> entityClass, ID id) {
     try {
       T entity = entityManager.find(entityClass, id);
       if (entity == null) {
-        throw new EntityNotFoundException(entityClass.getSimpleName() + " with ID " + id + " not found.");
+        throw new EntityNotFoundException(
+            entityClass.getSimpleName() + " with ID " + id + " not found.");
       }
       return entity;
     } catch (EntityNotFoundException e) {

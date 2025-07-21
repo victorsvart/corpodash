@@ -1,6 +1,5 @@
 package com.project.corpodash.application.usecase.project;
 
-import org.springframework.stereotype.Service;
 import com.project.corpodash.application.base.Usecase;
 import com.project.corpodash.application.dto.project.ProjectDto;
 import com.project.corpodash.application.dto.project.ProjectDto.AddTeamMemberDto;
@@ -9,9 +8,9 @@ import com.project.corpodash.application.session.Session;
 import com.project.corpodash.domain.project.Project;
 import com.project.corpodash.domain.project.interfaces.ProjectRepository;
 import com.project.corpodash.domain.user.User;
-
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AddTeamMemberUseCase extends Usecase<Project, ProjectDto.AddTeamMemberDto> {
@@ -23,8 +22,10 @@ public class AddTeamMemberUseCase extends Usecase<Project, ProjectDto.AddTeamMem
   }
 
   public Project execute(AddTeamMemberDto dto) {
-    Project project = projectRepository.findById(dto.projectId())
-        .orElseThrow(() -> new EntityNotFoundException("Cant find specified project"));
+    Project project =
+        projectRepository
+            .findById(dto.projectId())
+            .orElseThrow(() -> new EntityNotFoundException("Cant find specified project"));
 
     if (!project.isCreator(Session.getUserId())) {
       throw new RuntimeException("Can't update team which you are not the creator");
